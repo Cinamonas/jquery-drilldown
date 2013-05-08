@@ -39,7 +39,7 @@ Shown with their default values:
 }
 ```
 
-\* Note: `selector` and `event` will be use for binding drilldown-initiating action in this manner:
+\* Note: `selector` and `event` will be used for binding drilldown-initiating action in this manner:
 
 ```js
 $('.drilldown').on(event, selector, function () { /* ... */ });
