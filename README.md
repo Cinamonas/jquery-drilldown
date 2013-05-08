@@ -86,7 +86,7 @@ HTML Structure
 ```
 
 
-Licence
+License
 -------
 
-MIT
+[MIT](http://opensource.org/licenses/mit-license.php)
