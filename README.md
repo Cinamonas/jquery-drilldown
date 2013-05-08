@@ -1,19 +1,49 @@
 jQuery Drilldown
 ================
 
-A simple jQuery plugin for creating drilldown menus.
+A simple jQuery plugin for creating *animated* drilldown menus.
 
 
 Demo
 ----
 
-TODO.
+View it [here](http://htmlpreview.github.io/?https://github.com/Cinamonas/jquery-drilldown/blob/master/demo.html).
 
 
 Usage
 -----
 
-`$('.drilldown').drilldown()`
+```js
+var options = {};
+
+$('.drilldown').drilldown(options);
+```
+
+
+Available options
+-----------------
+
+You can also pass these options (default values are shown):
+
+```javascript
+{
+  event: 'click', // * View note below
+  selector: 'a',  // * View note below
+  speed: 100,
+  cssClass: {
+    container: 'drilldown-container',
+    root: 'drilldown-root',
+    sub: 'drilldown-sub',
+    back: 'drilldown-back'
+  }
+}
+```
+
+\* Note: `selector` and `event` will be use for binding drilldown-initiating action in this manner:
+
+```js
+$('.drilldown').on(event, selector, function () { /* ... */ });
+```
 
 
 HTML Structure
@@ -54,25 +84,3 @@ HTML Structure
   </div>
 </div>
 ```
-
-
-Options
--------
-
-You can also pass these options (default values are shown):
-
-```javascript
-{
-  event: 'click', // *
-  selector: 'a', // *
-  speed: 100,
-  cssClass: {
-    container: 'drilldown-container',
-    root: 'drilldown-root',
-    sub: 'drilldown-sub',
-    back: 'drilldown-back'
-  }
-}
-```
-
-* `selector` and `event` will be use for binding drilldown initiating action.
