@@ -46,12 +46,22 @@ $('.drilldown').on(event, selector, function () { /* ... */ });
 ```
 
 
-HTML Structure
---------------
+HTML & CSS
+----------
+
+```css
+.drilldown {
+  overflow: hidden;
+}
+.drilldown-sub {
+  display: none;
+}
+```
 
 ```html
 <div class="drilldown"><!-- required -->
   <div class="drilldown-container"><!-- required -->
+  
     <ul class="drilldown-root"><!-- required, but not necessary UL -->
       <li><a href="#">A Lorem ipsum</a></li>
       <li>
@@ -81,6 +91,7 @@ HTML Structure
         </ul>
       </li>
     </ul>
+    
   </div>
 </div>
 ```
