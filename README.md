@@ -84,3 +84,9 @@ HTML Structure
   </div>
 </div>
 ```
+
+
+Licence
+-------
+
+MIT
