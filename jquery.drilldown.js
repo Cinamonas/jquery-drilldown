@@ -52,8 +52,8 @@
 
     history: [],
     css: {
-      float: 'left',
-      width: null
+      'float': 'left',
+      'width': null
     },
 
     /**
@@ -152,7 +152,7 @@
       $roots.css(this.css);
 
       $roots.first().animate({
-        marginLeft: marginLeft
+        'margin-left': marginLeft
       }, this.options.speed, callback);
     },
 
@@ -164,8 +164,8 @@
      */
     restoreState: function ($current, $next) {
       $next.css({
-        float: 'none',
-        width: 'auto'
+        'float': 'none',
+        'width': 'auto'
       });
 
       $current.remove();
