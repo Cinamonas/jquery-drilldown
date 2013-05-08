@@ -23,7 +23,7 @@ $('.drilldown').drilldown(options);
 Available options
 -----------------
 
-You can also pass these options (default values are shown):
+Shown with their default values:
 
 ```javascript
 {
