@@ -10,7 +10,14 @@
  * Copyright (c) 2013 Aleksandras Nelkinas
  */
 
-;(function ($, undefined) {
+;(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD support
+    define(['jquery'], factory);
+  } else {
+    factory(jQuery);
+  }
+}(function ($, undefined) {
 
   'use strict';
 
@@ -176,4 +183,4 @@
     });
   };
 
-})(jQuery);
+}));
