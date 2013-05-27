@@ -16,7 +16,7 @@ Features
 Demo
 ----
 
-View it [here](http://htmlpreview.github.io/?https://github.com/Cinamonas/jquery-drilldown/blob/master/demo.html).
+View it [here](http://cinamonas.github.io/jquery-drilldown/demo.html).
 
 
 Usage
