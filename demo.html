@@ -5,8 +5,7 @@
   <title>jQuery Drilldown Demo</title>
 
   <!-- CSS -->
-
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/2.1.0/normalize.css">
   <style>
     body {
       font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -30,6 +29,12 @@
       padding: 10px;
       margin: 20px;
       background-color: #F3F3F3;
+
+      -webkit-transform: translate3d(0,0,0);
+      -moz-transform: translate3d(0,0,0);
+      -ms-transform: translate3d(0,0,0);
+      -o-transform: translate3d(0,0,0);
+      transform: translate3d(0,0,0);
     }
     .drilldown-sub {
       display: none;
@@ -111,12 +116,7 @@
 
   <!-- JS -->
 
-  <!--[if lt IE 9]>
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-  <![endif]-->
-  <!--[if (gte IE 9) | (!IE)]><!-->
-  <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.js"></script>
-  <!--<![endif]-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.10.0/jquery.js"></script>
   <script src="jquery.drilldown.js"></script>
   <script>
     $('.drilldown').drilldown();
