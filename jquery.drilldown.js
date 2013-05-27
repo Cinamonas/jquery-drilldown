@@ -2,7 +2,7 @@
  * A simple jQuery plugin for creating animated drilldown menus.
  *
  * @name jQuery Drilldown
- * @version 0.1.1
+ * @version 0.1.2
  * @requires jQuery v1.7+
  * @author Aleksandras Nelkinas
  * @license [MIT]{@link http://opensource.org/licenses/mit-license.php}
@@ -79,9 +79,9 @@
           preventDefault = true;
 
       if ($next.length) {
-        this.down.call(this, $next);
+        this.down($next);
       } else if ($trigger.closest('.' + this.options.cssClass.back).length) {
-        this.up.call(this);
+        this.up();
       } else {
         preventDefault = false;
       }
