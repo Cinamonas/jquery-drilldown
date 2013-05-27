@@ -3,7 +3,9 @@ jQuery Drilldown
 
 A simple jQuery plugin for creating *animated* drilldown menus.
 
-Features:
+
+Features
+--------
 
 * AMD support
 * Multiple menus on a single page
