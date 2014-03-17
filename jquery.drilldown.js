@@ -2,7 +2,7 @@
  * A simple jQuery plugin for creating animated drilldown menus.
  *
  * @name jQuery Drilldown
- * @version 0.1.3
+ * @version 0.1.4
  * @requires jQuery v1.7+
  * @author Aleksandras Nelkinas
  * @license [MIT]{@link http://opensource.org/licenses/mit-license.php}
@@ -97,8 +97,7 @@
      * @param {jQuery} $next
      */
     down: function ($next) {
-      var self = this,
-          $current;
+      var self = this;
 
       if (!$next.length) {
         return;
@@ -107,17 +106,18 @@
       this.css.width = this.$element.outerWidth();
       this.$container.width(this.css.width * 2);
 
-      $current = this.$container.find('.' + this.options.cssClass.root).first();
+      $next = $next.clone(true)
+          .removeClass(this.options.cssClass.sub)
+          .addClass(this.options.cssClass.root);
 
-      $next = $current.clone().html($next.html());
       this.$container.append($next);
 
       this.animateDrilling(-1 * this.css.width, function () {
         var $current = $next.prev();
 
-        self.history.push($current);
+        self.history.push($current.detach());
 
-        self.restoreState.call(self, $current, $next);
+        self.restoreState.call(self, $next);
       });
     },
 
@@ -136,7 +136,9 @@
       this.animateDrilling(0, function () {
         var $current = $next.next();
 
-        self.restoreState.call(self, $current, $next);
+        $current.remove();
+
+        self.restoreState.call(self, $next);
       });
     },
 
@@ -147,11 +149,11 @@
      * @param {Function} callback
      */
     animateDrilling: function (marginLeft, callback) {
-      var $roots = this.$container.children('.' + this.options.cssClass.root);
+      var $menus = this.$container.children('.' + this.options.cssClass.root);
 
-      $roots.css(this.css);
+      $menus.css(this.css);
 
-      $roots.first().animate({
+      $menus.first().animate({
         'margin-left': marginLeft
       }, this.options.speed, callback);
     },
@@ -159,16 +161,13 @@
     /**
      * Restores initial menu's state.
      *
-     * @param {jQuery} $current
-     * @param {jQuery} $next
+     * @param {jQuery} $menu
      */
-    restoreState: function ($current, $next) {
-      $next.css({
-        'float': 'none',
-        'width': 'auto'
+    restoreState: function ($menu) {
+      $menu.css({
+        'float': '',
+        'width': ''
       });
-
-      $current.remove();
 
       this.$container.width('auto');
     }
