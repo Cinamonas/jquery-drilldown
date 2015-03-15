@@ -3,7 +3,8 @@
   "version": "0.1.4",
   "main": "jquery.drilldown.js",
   "ignore": [
-    "**/.*"
+    "**/.*",
+    "node_modules"
   ],
   "dependencies": {
     "jquery": ">=1.7"
