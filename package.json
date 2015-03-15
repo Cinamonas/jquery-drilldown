@@ -1,0 +1,14 @@
+{
+  "name": "jquery-drilldown",
+  "version": "0.1.4",
+  "author": "Aleksandras Nelkinas <alex@cinamonas.io>",
+  "homepage": "http://cinamonas.github.io/jquery-drilldown/",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Cinamonas/jquery-drilldown.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Cinamonas/jquery-drilldown/issues"
+  },
+  "license": "MIT"
+}
