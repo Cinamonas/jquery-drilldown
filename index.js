@@ -60,16 +60,39 @@
     init: function () {
       var self = this;
 
-      this.history = [];
-      this.css = {
-        'float': 'left',
-        'width': null
+      this._history = [];
+      this._css = {
+        float: 'left',
+        width: null
       };
 
       this.$container = this.$element.find('.' + this.options.cssClass.container);
-      this.$element.on(this.options.event, this.options.selector, function (e) {
+
+      this.$element.on(this.options.event + '.' + pluginName, this.options.selector, function (e) {
         self.handleAction.call(self, e, $(this));
       });
+    },
+
+    /**
+     * Destroys plugin instance.
+     */
+    destroy: function () {
+      var $root;
+
+      this.$element.off(this.options.event + '.' + pluginName, this.options.selector);
+
+      if (this._history.length) {
+        $root = this._history[0];
+
+        this.$container.empty().append($root);
+        this.restoreState($root);
+      }
+
+      this._history = [];
+      this._css = {
+        float: 'left',
+        width: null
+      };
     },
 
     /**
@@ -107,8 +130,8 @@
         return;
       }
 
-      this.css.width = this.$element.outerWidth();
-      this.$container.width(this.css.width * 2);
+      this._css.width = this.$element.outerWidth();
+      this.$container.width(this._css.width * 2);
 
       $next = $next.clone(true)
           .removeClass(this.options.cssClass.sub)
@@ -116,10 +139,10 @@
 
       this.$container.append($next);
 
-      this.animateDrilling(-1 * this.css.width, function () {
+      this.animateDrilling(-1 * this._css.width, function () {
         var $current = $next.prev();
 
-        self.history.push($current.detach());
+        self._history.push($current.detach());
 
         self.restoreState.call(self, $next);
       });
@@ -130,10 +153,10 @@
      */
     up: function () {
       var self = this,
-          $next = this.history.pop();
+          $next = this._history.pop();
 
-      this.css.width = this.$element.outerWidth();
-      this.$container.width(this.css.width * 2);
+      this._css.width = this.$element.outerWidth();
+      this.$container.width(this._css.width * 2);
 
       this.$container.prepend($next);
 
@@ -155,10 +178,10 @@
     animateDrilling: function (marginLeft, callback) {
       var $menus = this.$container.children('.' + this.options.cssClass.root);
 
-      $menus.css(this.css);
+      $menus.css(this._css);
 
       $menus.first().animate({
-        'margin-left': marginLeft
+        marginLeft: marginLeft
       }, this.options.speed, callback);
     },
 
@@ -169,19 +192,30 @@
      */
     restoreState: function ($menu) {
       $menu.css({
-        'float': '',
-        'width': ''
+        float: '',
+        width: '',
+        marginLeft: ''
       });
 
-      this.$container.width('auto');
+      this.$container.css('width', '');
     }
 
   };
 
   $.fn[pluginName] = function (options) {
     return this.each(function () {
-      if (!$.data(this, pluginName)) {
+      var inst = $.data(this, pluginName),
+          method = options;
+
+      if (!inst) {
         $.data(this, pluginName, new Plugin(this, options));
+      } else if (typeof method === 'string') {
+        if (method === 'destroy') {
+          $.removeData(this,  pluginName);
+        }
+        if (typeof inst[method] === 'function') {
+          inst[method]();
+        }
       }
     });
   };
