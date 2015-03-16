@@ -7,7 +7,7 @@ A simple jQuery plugin for creating *animated* drilldown menus.
 Features
 --------
 
-* AMD support
+* [UMD](https://github.com/umdjs/umd) (AMD, Node/CommonJS) support
 * Multiple menus on a single page
 * Pretty flexible, doesn't enforce specific tags
 * Lightweight: 1.8 KB when minified (even less after gzip)
