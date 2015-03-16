@@ -7,7 +7,7 @@
  * @author Aleksandras Nelkinas
  * @license [MIT]{@link http://opensource.org/licenses/mit-license.php}
  *
- * Copyright (c) 2013 Aleksandras Nelkinas
+ * Copyright (c) 2015 Aleksandras Nelkinas
  */
 
 ;(function (factory) {
@@ -71,7 +71,7 @@
        */
       destroy: function () {
         this.reset();
-        
+
         this.$element.off(this.options.event + '.' + pluginName, this.options.selector);
       },
 
