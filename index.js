@@ -40,25 +40,18 @@
     }
   };
 
-  function Plugin(element, options) {
-    this._name = pluginName;
-    this._defaults = defaults;
+  var Plugin = (function () {
 
-    this.element = element;
-    this.$element = $(element);
+    function Plugin(element, options) {
+      var inst = this;
 
-    this.options = $.extend({}, defaults, options);
+      this._name = pluginName;
+      this._defaults = defaults;
 
-    this.init();
-  }
+      this.element = element;
+      this.$element = $(element);
 
-  Plugin.prototype = {
-
-    /**
-     * Initializes plugin.
-     */
-    init: function () {
-      var self = this;
+      this.options = $.extend({}, defaults, options);
 
       this._history = [];
       this._css = {
@@ -69,46 +62,51 @@
       this.$container = this.$element.find('.' + this.options.cssClass.container);
 
       this.$element.on(this.options.event + '.' + pluginName, this.options.selector, function (e) {
-        self.handleAction.call(self, e, $(this));
+        handleAction.call(inst, e, $(this));
       });
-    },
+    }
 
-    /**
-     * Destroys plugin instance.
-     */
-    destroy: function () {
-      var $root;
+    Plugin.prototype = {
 
-      this.$element.off(this.options.event + '.' + pluginName, this.options.selector);
+      /**
+       * Destroys plugin instance.
+       */
+      destroy: function () {
+        var $root;
 
-      if (this._history.length) {
-        $root = this._history[0];
+        this.$element.off(this.options.event + '.' + pluginName, this.options.selector);
 
-        this.$container.empty().append($root);
-        this.restoreState($root);
+        if (this._history.length) {
+          $root = this._history[0];
+
+          this.$container.empty().append($root);
+          restoreState.call(this, $root);
+        }
+
+        this._history = [];
+        this._css = {
+          float: 'left',
+          width: null
+        };
       }
 
-      this._history = [];
-      this._css = {
-        float: 'left',
-        width: null
-      };
-    },
+    };
 
     /**
      * Handles user action and decides whether or not and where to drill.
      *
      * @param {jQuery.Event} e
      * @param {jQuery}       $trigger
+     * @private
      */
-    handleAction: function (e, $trigger) {
+    function handleAction(e, $trigger) {
       var $next = $trigger.nextAll('.' + this.options.cssClass.sub),
           preventDefault = true;
 
       if ($next.length) {
-        this.down($next);
+        down.call(this, $next);
       } else if ($trigger.closest('.' + this.options.cssClass.back).length) {
-        this.up();
+        up.call(this);
       } else {
         preventDefault = false;
       }
@@ -116,16 +114,15 @@
       if (preventDefault && $trigger.prop('tagName') === 'A') {
         e.preventDefault();
       }
-    },
+    }
 
     /**
      * Drills down (deeper).
      *
      * @param {jQuery} $next
+     * @private
      */
-    down: function ($next) {
-      var self = this;
-
+    function down($next) {
       if (!$next.length) {
         return;
       }
@@ -139,43 +136,45 @@
 
       this.$container.append($next);
 
-      this.animateDrilling(-1 * this._css.width, function () {
+      animateDrilling.call(this, -1 * this._css.width, function () {
         var $current = $next.prev();
 
-        self._history.push($current.detach());
+        this._history.push($current.detach());
 
-        self.restoreState.call(self, $next);
-      });
-    },
+        restoreState.call(this, $next);
+      }.bind(this));
+    }
 
     /**
      * Drills up (back).
+     *
+     * @private
      */
-    up: function () {
-      var self = this,
-          $next = this._history.pop();
+    function up() {
+      var $next = this._history.pop();
 
       this._css.width = this.$element.outerWidth();
       this.$container.width(this._css.width * 2);
 
       this.$container.prepend($next);
 
-      this.animateDrilling(0, function () {
+      animateDrilling.call(this, 0, function () {
         var $current = $next.next();
 
         $current.remove();
 
-        self.restoreState.call(self, $next);
-      });
-    },
+        restoreState.call(this, $next);
+      }.bind(this));
+    }
 
     /**
      * Animates drilling process.
      *
      * @param {Number}   marginLeft Target margin-left.
      * @param {Function} callback
+     * @private
      */
-    animateDrilling: function (marginLeft, callback) {
+    function animateDrilling(marginLeft, callback) {
       var $menus = this.$container.children('.' + this.options.cssClass.root);
 
       $menus.css(this._css);
@@ -183,14 +182,15 @@
       $menus.first().animate({
         marginLeft: marginLeft
       }, this.options.speed, callback);
-    },
+    }
 
     /**
      * Restores initial menu's state.
      *
      * @param {jQuery} $menu
+     * @private
      */
-    restoreState: function ($menu) {
+    function restoreState($menu) {
       $menu.css({
         float: '',
         width: '',
@@ -200,7 +200,9 @@
       this.$container.css('width', '');
     }
 
-  };
+    return Plugin;
+
+  })();
 
   $.fn[pluginName] = function (options) {
     return this.each(function () {
