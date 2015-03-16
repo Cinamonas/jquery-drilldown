@@ -25,10 +25,8 @@
 
   'use strict';
 
-  var pluginName = 'drilldown',
-      defaults;
-
-  defaults = {
+  var pluginName = 'drilldown';
+  var defaults = {
     event: 'click',
     selector: 'a',
     speed: 100,
@@ -72,9 +70,16 @@
        * Destroys plugin instance.
        */
       destroy: function () {
-        var $root;
-
+        this.reset();
+        
         this.$element.off(this.options.event + '.' + pluginName, this.options.selector);
+      },
+
+      /**
+       * Resets drilldown to its initial state.
+       */
+      reset: function () {
+        var $root;
 
         if (this._history.length) {
           $root = this._history[0];
@@ -100,8 +105,8 @@
      * @private
      */
     function handleAction(e, $trigger) {
-      var $next = $trigger.nextAll('.' + this.options.cssClass.sub),
-          preventDefault = true;
+      var $next = $trigger.nextAll('.' + this.options.cssClass.sub);
+      var preventDefault = true;
 
       if ($next.length) {
         down.call(this, $next);
@@ -206,8 +211,8 @@
 
   $.fn[pluginName] = function (options) {
     return this.each(function () {
-      var inst = $.data(this, pluginName),
-          method = options;
+      var inst = $.data(this, pluginName);
+      var method = options;
 
       if (!inst) {
         $.data(this, pluginName, new Plugin(this, options));
