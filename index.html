@@ -1,0 +1,151 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>jQuery Drilldown by Cinamonas</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>jQuery Drilldown</h1>
+        <p>A simple jQuery plugin for creating animated drilldown menus</p>
+
+        <p class="view"><a href="https://github.com/Cinamonas/jquery-drilldown">View the Project on GitHub <small>Cinamonas/jquery-drilldown</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/Cinamonas/jquery-drilldown/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Cinamonas/jquery-drilldown/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Cinamonas/jquery-drilldown">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="jquery-drilldown" class="anchor" href="#jquery-drilldown" aria-hidden="true"><span class="octicon octicon-link"></span></a>jQuery Drilldown</h1>
+
+<p>A simple jQuery plugin for creating <em>animated</em> drilldown menus.</p>
+
+<p><em>Since v1.0.0, project follows <a href="http://semver.org/">Semantic Versioning</a>.</em></p>
+
+<h2>
+<a id="features" class="anchor" href="#features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Features</h2>
+
+<ul>
+<li>
+<a href="https://github.com/umdjs/umd">UMD</a> (AMD, Node/CommonJS) support</li>
+<li>Multiple menus on a single page</li>
+<li>Pretty flexible, doesn't enforce specific tags</li>
+<li>Lightweight: 2 KB when minified (even less after gzip)</li>
+</ul>
+
+<h2>
+<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h2>
+
+<p>View it <a href="http://cinamonas.github.io/jquery-drilldown/demo.html">here</a>.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<div class="highlight highlight-js"><pre><span class="pl-s">var</span> options <span class="pl-k">=</span> {};
+
+$(<span class="pl-s1"><span class="pl-pds">'</span>.drilldown<span class="pl-pds">'</span></span>).drilldown(options);</pre></div>
+
+<h2>
+<a id="options" class="anchor" href="#options" aria-hidden="true"><span class="octicon octicon-link"></span></a>Options</h2>
+
+<p>Shown with their default values:</p>
+
+<div class="highlight highlight-javascript"><pre>{
+  <span class="pl-s3">event</span><span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>click<span class="pl-pds">'</span></span>, <span class="pl-c">// * View note below</span>
+  selector<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>a<span class="pl-pds">'</span></span>,  <span class="pl-c">// * View note below</span>
+  speed<span class="pl-k">:</span> <span class="pl-c1">100</span>,
+  cssClass<span class="pl-k">:</span> {
+    container<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>drilldown-container<span class="pl-pds">'</span></span>,
+    root<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>drilldown-root<span class="pl-pds">'</span></span>,
+    sub<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>drilldown-sub<span class="pl-pds">'</span></span>,
+    back<span class="pl-k">:</span> <span class="pl-s1"><span class="pl-pds">'</span>drilldown-back<span class="pl-pds">'</span></span>
+  }
+}</pre></div>
+
+<p>* Note: <code>selector</code> and <code>event</code> will be used for binding drilldown-initiating action in this manner:</p>
+
+<div class="highlight highlight-js"><pre>$(<span class="pl-s1"><span class="pl-pds">'</span>.drilldown<span class="pl-pds">'</span></span>).on(<span class="pl-s3">event</span>, selector, <span class="pl-st">function</span> () { <span class="pl-c">/* ... */</span> });</pre></div>
+
+<h2>
+<a id="api" class="anchor" href="#api" aria-hidden="true"><span class="octicon octicon-link"></span></a>API</h2>
+
+<ul>
+<li>
+<code>$('.drilldown').drilldown('reset')</code> resets drilldown to its initial state</li>
+<li>
+<code>$('.drilldown').drilldown('destroy')</code> destroys plugin instance</li>
+</ul>
+
+<h2>
+<a id="css--html" class="anchor" href="#css--html" aria-hidden="true"><span class="octicon octicon-link"></span></a>CSS &amp; HTML</h2>
+
+<div class="highlight highlight-css"><pre><span class="pl-e">.drilldown</span> {
+  <span class="pl-mp"><span class="pl-s3">overflow</span></span>: <span class="pl-sc">hidden</span>;
+}
+<span class="pl-e">.drilldown-sub</span> {
+  <span class="pl-mp"><span class="pl-s3">display</span></span>: <span class="pl-sc">none</span>;
+}</pre></div>
+
+<div class="highlight highlight-html"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>drilldown<span class="pl-pds">"</span></span>&gt; <span class="pl-c">&lt;!-- required --&gt;</span>
+  &lt;<span class="pl-ent">div</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>drilldown-container<span class="pl-pds">"</span></span>&gt; <span class="pl-c">&lt;!-- required --&gt;</span>
+
+    &lt;<span class="pl-ent">ul</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>drilldown-root<span class="pl-pds">"</span></span>&gt; <span class="pl-c">&lt;!-- required, but not necessarily UL --&gt;</span>
+      &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span>&gt;A Lorem ipsum&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+      &lt;<span class="pl-ent">li</span>&gt;
+        &lt;<span class="pl-ent">a</span>&gt;A Dolor sit amet&lt;/<span class="pl-ent">a</span>&gt;
+        &lt;<span class="pl-ent">ul</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>drilldown-sub<span class="pl-pds">"</span></span>&gt; <span class="pl-c">&lt;!-- required for deeper (non-root) levels --&gt;</span>
+          &lt;<span class="pl-ent">li</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>drilldown-back<span class="pl-pds">"</span></span>&gt;&lt;<span class="pl-ent">a</span>&gt;Back&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt; <span class="pl-c">&lt;!-- required to be able to go back --&gt;</span>
+          &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span>&gt;A Fusce eget&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+          &lt;<span class="pl-ent">li</span>&gt;
+            &lt;<span class="pl-ent">a</span>&gt;A Quam vel lorem&lt;/<span class="pl-ent">a</span>&gt;
+            &lt;<span class="pl-ent">ul</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>drilldown-sub<span class="pl-pds">"</span></span>&gt;
+              &lt;<span class="pl-ent">li</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>drilldown-back<span class="pl-pds">"</span></span>&gt;&lt;<span class="pl-ent">a</span>&gt;Back&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+              &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span>&gt;A Molestie tincidunt&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+              &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span>&gt;A Pellentesque&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+            &lt;/<span class="pl-ent">ul</span>&gt;
+          &lt;/<span class="pl-ent">li</span>&gt;
+          &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span>&gt;A Sit amet tincidunt&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+        &lt;/<span class="pl-ent">ul</span>&gt;
+      &lt;/<span class="pl-ent">li</span>&gt;
+      &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span>&gt;A Consectetur&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+      &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span>&gt;A Maecenas id&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+      &lt;<span class="pl-ent">li</span>&gt;
+        &lt;<span class="pl-ent">a</span>&gt;A Hendrerit odio&lt;/<span class="pl-ent">a</span>&gt;
+        &lt;<span class="pl-ent">ul</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>drilldown-sub<span class="pl-pds">"</span></span>&gt;
+          &lt;<span class="pl-ent">li</span> <span class="pl-e">class</span>=<span class="pl-s1"><span class="pl-pds">"</span>drilldown-back<span class="pl-pds">"</span></span>&gt;&lt;<span class="pl-ent">a</span>&gt;Back&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+          &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span>&gt;A Cras tincidunt&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+          &lt;<span class="pl-ent">li</span>&gt;&lt;<span class="pl-ent">a</span>&gt;A Vivamus eu&lt;/<span class="pl-ent">a</span>&gt;&lt;/<span class="pl-ent">li</span>&gt;
+        &lt;/<span class="pl-ent">ul</span>&gt;
+      &lt;/<span class="pl-ent">li</span>&gt;
+    &lt;/<span class="pl-ent">ul</span>&gt;
+
+  &lt;/<span class="pl-ent">div</span>&gt;
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p><a href="http://opensource.org/licenses/mit-license.php">MIT</a></p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/Cinamonas">Cinamonas</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
