@@ -4,6 +4,7 @@ var rename = require('gulp-rename');
 var replace = require('gulp-replace');
 var bump = require('gulp-bump');
 var uglify = require('gulp-uglify');
+var pkg = require('./package.json');
 
 
 var NAME = 'jquery.drilldown';
@@ -16,7 +17,7 @@ gulp.task('bump', function () {
 
 gulp.task('dist:orig', function () {
   return gulp.src('index.js')
-      .pipe(replace('$VERSION$', require('package.json').version))
+      .pipe(replace('$VERSION$', pkg.version))
       .pipe(rename(NAME + '.js'))
       .pipe(gulp.dest('dist'));
 });
