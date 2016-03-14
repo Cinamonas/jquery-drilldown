@@ -1,7 +1,7 @@
 {
   "name": "jquery-drilldown",
-  "version": "1.0.0",
-  "main": "index.js",
+  "version": "1.1.0",
+  "main": "dist/jquery.drilldown.js",
   "author": "Aleksandras Nelkinas <alex@cinamonas.io>",
   "homepage": "http://cinamonas.github.io/jquery-drilldown/",
   "repository": {

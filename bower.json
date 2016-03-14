@@ -1,7 +1,7 @@
 {
   "name": "jquery-drilldown",
-  "version": "1.0.0",
-  "main": "jquery.drilldown.js",
+  "version": "1.1.0",
+  "main": "dist/jquery.drilldown.js",
   "ignore": [
     "**/.*",
     "node_modules"
