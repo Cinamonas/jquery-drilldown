@@ -135,7 +135,10 @@
       this._css.width = this.$element.outerWidth();
       this.$container.width(this._css.width * 2);
 
-      $next = $next.clone(true)
+      // Track parent of the opened node
+      $next.parent().attr('data-next-parent', true);
+
+      $next = $next
           .removeClass(this.options.cssClass.sub)
           .addClass(this.options.cssClass.root);
 
@@ -166,7 +169,14 @@
       animateDrilling.call(this, 0, function () {
         var $current = $next.next();
 
-        $current.remove();
+        $current
+            .addClass(this.options.cssClass.sub)
+            .removeClass(this.options.cssClass.root);
+
+        // Restore the node at its initial position in the DOM
+        this.$container.find('[data-next-parent]').last()
+            .removeAttr('data-next-parent')
+            .append($current);
 
         restoreState.call(this, $next);
       }.bind(this));
