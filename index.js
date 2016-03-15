@@ -25,16 +25,18 @@
 
   'use strict';
 
-  var pluginName = 'drilldown';
+  var PLUGIN_NAME = 'drilldown';
+  var TRACK_PARENT_ATTR = 'data-next-parent';
+
   var defaults = {
     event: 'click',
     selector: 'a',
     speed: 100,
     cssClass: {
-      container: pluginName + '-container',
-      root: pluginName + '-root',
-      sub: pluginName + '-sub',
-      back: pluginName + '-back'
+      container: PLUGIN_NAME + '-container',
+      root: PLUGIN_NAME + '-root',
+      sub: PLUGIN_NAME + '-sub',
+      back: PLUGIN_NAME + '-back'
     }
   };
 
@@ -43,7 +45,7 @@
     function Plugin(element, options) {
       var inst = this;
 
-      this._name = pluginName;
+      this._name = PLUGIN_NAME;
       this._defaults = defaults;
 
       this.element = element;
@@ -59,7 +61,7 @@
 
       this.$container = this.$element.find('.' + this.options.cssClass.container);
 
-      this.$element.on(this.options.event + '.' + pluginName, this.options.selector, function (e) {
+      this.$element.on(this.options.event + '.' + PLUGIN_NAME, this.options.selector, function (e) {
         handleAction.call(inst, e, $(this));
       });
     }
@@ -72,20 +74,17 @@
       destroy: function () {
         this.reset();
 
-        this.$element.off(this.options.event + '.' + pluginName, this.options.selector);
+        this.$element.off(this.options.event + '.' + PLUGIN_NAME, this.options.selector);
       },
 
       /**
        * Resets drilldown to its initial state.
        */
       reset: function () {
-        var $root;
+        var iter;
 
-        if (this._history.length) {
-          $root = this._history[0];
-
-          this.$container.empty().append($root);
-          restoreState.call(this, $root);
+        for (iter = this._history.length; iter > 0; iter--) {
+          up.call(this, { speed: 0 });
         }
 
         this._history = [];
@@ -125,9 +124,12 @@
      * Drills down (deeper).
      *
      * @param {jQuery} $next
+     * @param {Object} opts
      * @private
      */
-    function down($next) {
+    function down($next, opts) {
+      var speed = (opts && opts.speed !== undefined) ? opts.speed : this.options.speed;
+
       if (!$next.length) {
         return;
       }
@@ -136,7 +138,7 @@
       this.$container.width(this._css.width * 2);
 
       // Track parent of the opened node
-      $next.parent().attr('data-next-parent', true);
+      $next.parent().attr(TRACK_PARENT_ATTR, true);
 
       $next = $next
           .removeClass(this.options.cssClass.sub)
@@ -144,7 +146,7 @@
 
       this.$container.append($next);
 
-      animateDrilling.call(this, -1 * this._css.width, function () {
+      animateDrilling.call(this, { marginLeft: -1 * this._css.width, speed: speed }, function () {
         var $current = $next.prev();
 
         this._history.push($current.detach());
@@ -158,7 +160,8 @@
      *
      * @private
      */
-    function up() {
+    function up(opts) {
+      var speed = (opts && opts.speed !== undefined) ? opts.speed : this.options.speed;
       var $next = this._history.pop();
 
       this._css.width = this.$element.outerWidth();
@@ -166,7 +169,7 @@
 
       this.$container.prepend($next);
 
-      animateDrilling.call(this, 0, function () {
+      animateDrilling.call(this, { marginLeft: 0, speed: speed }, function () {
         var $current = $next.next();
 
         $current
@@ -174,8 +177,8 @@
             .removeClass(this.options.cssClass.root);
 
         // Restore the node at its initial position in the DOM
-        this.$container.find('[data-next-parent]').last()
-            .removeAttr('data-next-parent')
+        this.$container.find('[' + TRACK_PARENT_ATTR + ']').last()
+            .removeAttr(TRACK_PARENT_ATTR)
             .append($current);
 
         restoreState.call(this, $next);
@@ -185,18 +188,16 @@
     /**
      * Animates drilling process.
      *
-     * @param {Number}   marginLeft Target margin-left.
+     * @param {Object}   opts
      * @param {Function} callback
      * @private
      */
-    function animateDrilling(marginLeft, callback) {
+    function animateDrilling(opts, callback) {
       var $menus = this.$container.children('.' + this.options.cssClass.root);
 
       $menus.css(this._css);
 
-      $menus.first().animate({
-        marginLeft: marginLeft
-      }, this.options.speed, callback);
+      $menus.first().animate({ marginLeft: opts.marginLeft }, opts.speed, callback);
     }
 
     /**
@@ -219,16 +220,16 @@
 
   })();
 
-  $.fn[pluginName] = function (options) {
+  $.fn[PLUGIN_NAME] = function (options) {
     return this.each(function () {
-      var inst = $.data(this, pluginName);
+      var inst = $.data(this, PLUGIN_NAME);
       var method = options;
 
       if (!inst) {
-        $.data(this, pluginName, new Plugin(this, options));
+        $.data(this, PLUGIN_NAME, new Plugin(this, options));
       } else if (typeof method === 'string') {
         if (method === 'destroy') {
-          $.removeData(this,  pluginName);
+          $.removeData(this,  PLUGIN_NAME);
         }
         if (typeof inst[method] === 'function') {
           inst[method]();
