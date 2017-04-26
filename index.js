@@ -5,6 +5,7 @@
  * @version $VERSION$
  * @requires jQuery v1.7+
  * @author Aleksandras Nelkinas
+ * @rewriter Muhammad Shahabipour
  * @license [MIT]{@link http://opensource.org/licenses/mit-license.php}
  *
  * Copyright (c) 2015 Aleksandras Nelkinas
