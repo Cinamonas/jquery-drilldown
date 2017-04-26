@@ -3,13 +3,13 @@
   "version": "1.1.2",
   "main": "dist/jquery.drilldown.js",
   "author": "Muhammad Shahabipour <muh.shahabipour@gmail.com>",
-  "homepage": "https://github.com/muhshahabipour/jquery-drilldown",
+  "homepage": "https://github.com/muhshahabipour/jquery-rtl-drilldown",
   "repository": {
     "type": "git",
-    "url": "git://github.com/muhshahabipour/jquery-drilldown.git"
+    "url": "git://github.com/muhshahabipour/jquery-rtl-drilldown.git"
   },
   "bugs": {
-    "url": "https://github.com/muhshahabipour/jquery-drilldown/issues"
+    "url": "https://github.com/muhshahabipour/jquery-rtl-drilldown/issues"
   },
   "license": "MIT",
   "devDependencies": {
