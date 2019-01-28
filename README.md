@@ -40,7 +40,7 @@ Shown with their default values:
   event: 'click', // * View note below
   selector: 'a',  // * View note below
   speed: 100,
-  direction: 'rtl',
+  // direction: 'rtl',
   cssClass: {
     container: 'drilldown-container',
     root: 'drilldown-root',
