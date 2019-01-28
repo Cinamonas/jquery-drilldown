@@ -5,12 +5,14 @@
  * @version $VERSION$
  * @requires jQuery v1.7+
  * @author Aleksandras Nelkinas
+ * @rewriter Muhammad Shahabipour
  * @license [MIT]{@link http://opensource.org/licenses/mit-license.php}
  *
  * Copyright (c) 2015 Aleksandras Nelkinas
  */
 
-;(function (factory) {
+;
+(function (factory) {
   if (typeof define === 'function' && define.amd) {
     // AMD
     define(['jquery'], factory);
@@ -32,6 +34,7 @@
     event: 'click',
     selector: 'a',
     speed: 100,
+    direction: 'ltr',
     cssClass: {
       container: PLUGIN_NAME + '-container',
       root: PLUGIN_NAME + '-root',
@@ -55,7 +58,7 @@
 
       this._history = [];
       this._css = {
-        float: 'left',
+        float: this.options.direction == 'rtl' ? 'right' : 'left',
         width: null
       };
 
@@ -84,12 +87,14 @@
         var iter;
 
         for (iter = this._history.length; iter > 0; iter--) {
-          up.call(this, { speed: 0 });
+          up.call(this, {
+            speed: 0
+          });
         }
 
         this._history = [];
         this._css = {
-          float: 'left',
+          float: this.options.direction == 'rtl' ? 'right' : 'left',
           width: null
         };
       }
@@ -141,18 +146,34 @@
       $next.parent().attr(TRACK_PARENT_ATTR, true);
 
       $next = $next
-          .removeClass(this.options.cssClass.sub)
-          .addClass(this.options.cssClass.root);
+        .removeClass(this.options.cssClass.sub)
+        .addClass(this.options.cssClass.root);
 
       this.$container.append($next);
 
-      animateDrilling.call(this, { marginLeft: -1 * this._css.width, speed: speed }, function () {
-        var $current = $next.prev();
+      if (this.options.direction === 'rtl') {
+        animateDrilling.call(this, {
+          marginRight: -1 * this._css.width,
+          speed: speed
+        }, function () {
+          var $current = $next.prev();
 
-        this._history.push($current.detach());
+          this._history.push($current.detach());
 
-        restoreState.call(this, $next);
-      }.bind(this));
+          restoreState.call(this, $next);
+        }.bind(this));
+      } else {
+        animateDrilling.call(this, {
+          marginLeft: -1 * this._css.width,
+          speed: speed
+        }, function () {
+          var $current = $next.prev();
+
+          this._history.push($current.detach());
+
+          restoreState.call(this, $next);
+        }.bind(this));
+      }
     }
 
     /**
@@ -169,20 +190,43 @@
 
       this.$container.prepend($next);
 
-      animateDrilling.call(this, { marginLeft: 0, speed: speed }, function () {
-        var $current = $next.next();
+      if (this.options.direction === 'rtl') {
+        animateDrilling.call(this, {
+          marginRight: 0,
+          speed: speed
+        }, function () {
+          var $current = $next.next();
 
-        $current
+          $current
             .addClass(this.options.cssClass.sub)
             .removeClass(this.options.cssClass.root);
 
-        // Restore the node at its initial position in the DOM
-        this.$container.find('[' + TRACK_PARENT_ATTR + ']').last()
+          // Restore the node at its initial position in the DOM
+          this.$container.find('[' + TRACK_PARENT_ATTR + ']').last()
             .removeAttr(TRACK_PARENT_ATTR)
             .append($current);
 
-        restoreState.call(this, $next);
-      }.bind(this));
+          restoreState.call(this, $next);
+        }.bind(this));
+      } else {
+        animateDrilling.call(this, {
+          marginLeft: 0,
+          speed: speed
+        }, function () {
+          var $current = $next.next();
+
+          $current
+            .addClass(this.options.cssClass.sub)
+            .removeClass(this.options.cssClass.root);
+
+          // Restore the node at its initial position in the DOM
+          this.$container.find('[' + TRACK_PARENT_ATTR + ']').last()
+            .removeAttr(TRACK_PARENT_ATTR)
+            .append($current);
+
+          restoreState.call(this, $next);
+        }.bind(this));
+      }
     }
 
     /**
@@ -197,7 +241,15 @@
 
       $menus.css(this._css);
 
-      $menus.first().animate({ marginLeft: opts.marginLeft }, opts.speed, callback);
+      if (this.options.direction === 'rtl') {
+        $menus.first().animate({
+          marginRight: opts.marginRight
+        }, opts.speed, callback);
+      } else {
+        $menus.first().animate({
+          marginLeft: opts.marginLeft
+        }, opts.speed, callback);
+      }
     }
 
     /**
@@ -207,11 +259,19 @@
      * @private
      */
     function restoreState($menu) {
-      $menu.css({
-        float: '',
-        width: '',
-        marginLeft: ''
-      });
+      if (this.options.direction === 'rtl') {
+        $menu.css({
+          float: '',
+          width: '',
+          marginRight: ''
+        });
+      } else {
+        $menu.css({
+          float: '',
+          width: '',
+          marginLeft: ''
+        });
+      }
 
       this.$container.css('width', '');
     }
@@ -229,7 +289,7 @@
         $.data(this, PLUGIN_NAME, new Plugin(this, options));
       } else if (typeof method === 'string') {
         if (method === 'destroy') {
-          $.removeData(this,  PLUGIN_NAME);
+          $.removeData(this, PLUGIN_NAME);
         }
         if (typeof inst[method] === 'function') {
           inst[method]();

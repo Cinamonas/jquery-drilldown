@@ -14,7 +14,6 @@ Features
 * Pretty flexible, doesn't enforce specific tags
 * Lightweight: 2 KB when minified (even less after gzip)
 
-
 Demo
 ----
 
@@ -41,6 +40,7 @@ Shown with their default values:
   event: 'click', // * View note below
   selector: 'a',  // * View note below
   speed: 100,
+  // direction: 'rtl',
   cssClass: {
     container: 'drilldown-container',
     root: 'drilldown-root',
